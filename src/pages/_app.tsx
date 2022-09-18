@@ -5,17 +5,23 @@ import { withTRPC } from "@trpc/next";
 import { SessionProvider } from "next-auth/react";
 import type { AppType } from "next/dist/shared/lib/utils";
 import superjson from "superjson";
-import type { AppRouter } from "../server/router";
-import "../styles/globals.css";
+import type { AppRouter } from "../server/routes/app.route";
+import "tailwindcss/tailwind.css";
+import Head from "next/head";
 
 const MyApp: AppType = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
   return (
+    <>
+    <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
     <SessionProvider session={session}>
       <Component {...pageProps} />
     </SessionProvider>
+    </>
   );
 };
 
@@ -27,12 +33,7 @@ const getBaseUrl = () => {
 
 export default withTRPC<AppRouter>({
   config({ ctx }) {
-    /**
-     * If you want to use SSR, you need to use the server's full URL
-     * @link https://trpc.io/docs/ssr
-     */
     const url = `${getBaseUrl()}/api/trpc`;
-
     return {
       links: [
         loggerLink({
@@ -44,27 +45,7 @@ export default withTRPC<AppRouter>({
       ],
       url,
       transformer: superjson,
-      /**
-       * @link https://react-query.tanstack.com/reference/QueryClient
-       */
-      // queryClientConfig: { defaultOptions: { queries: { staleTime: 60 } } },
-
-      // To use SSR properly you need to forward the client's headers to the server
-      // headers: () => {
-      //   if (ctx?.req) {
-      //     const headers = ctx?.req?.headers;
-      //     delete headers?.connection;
-      //     return {
-      //       ...headers,
-      //       "x-ssr": "1",
-      //     };
-      //   }
-      //   return {};
-      // }
     };
   },
-  /**
-   * @link https://trpc.io/docs/ssr
-   */
   ssr: false,
 })(MyApp);

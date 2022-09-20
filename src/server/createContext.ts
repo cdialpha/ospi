@@ -1,7 +1,7 @@
 import { verify } from "crypto";
 import { NextApiRequest, NextApiResponse } from "next";
 import { verifyJwt } from "../utils/jwt";
-import { prisma } from "../utils/prisma";
+import { prisma } from "../utils/prsima";
 
 interface CtxUser {
   id: string;
@@ -13,10 +13,11 @@ interface CtxUser {
 
 function getUserFromRequest(req: NextApiRequest) {
   const token = req.cookies.token;
-
+  console.log("token: ", token);
   if (token) {
     try {
       const verified = verifyJwt<CtxUser>(token);
+      console.log("verified? : ", token);
       return verified;
     } catch (e) {
       return null;

@@ -8,6 +8,8 @@ import superjson from "superjson";
 import type { AppRouter } from "../server/routes/app.route";
 import "tailwindcss/tailwind.css";
 import Head from "next/head";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const MyApp: AppType = ({
   Component,
@@ -15,12 +17,15 @@ const MyApp: AppType = ({
 }) => {
   return (
     <>
-    <Head>
+      <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-    <SessionProvider session={session}>
-      <Component {...pageProps} />
-    </SessionProvider>
+
+      <SessionProvider session={session}>
+        <Navbar />
+        <Component {...pageProps} />
+        <Footer />
+      </SessionProvider>
     </>
   );
 };

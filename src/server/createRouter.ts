@@ -1,40 +1,7 @@
-import { verify } from "crypto";
-import { NextApiRequest, NextApiResponse } from "next";
-import { verifyJwt } from "../utils/jwt";
-import { prisma } from "../utils/prsima";
+import { router } from "@trpc/server";
+import superjson from "superjson";
+import { Context } from "./createContext";
 
-interface CtxUser {
-  id: string;
-  email: string;
-  name: string;
-  iat: string;
-  exp: number;
+export function createRouter() {
+  return router<Context>().transformer(superjson);
 }
-
-function getUserFromRequest(req: NextApiRequest) {
-  const token = req.cookies.token;
-
-  if (token) {
-    try {
-      const verified = verifyJwt<CtxUser>(token);
-      return verified;
-    } catch (e) {
-      return null;
-    }
-  }
-  return null;
-}
-
-export function createContext({
-  req,
-  res,
-}: {
-  req: NextApiRequest;
-  res: NextApiResponse;
-}) {
-  const user = getUserFromRequest(req);
-
-  return { req, res, prisma, user };
-}
-
-export type Context = ReturnType<typeof createContext>;

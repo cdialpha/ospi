@@ -13,8 +13,6 @@ const Container = styled.div`
   flex
   flex-col
   border-b-2
-  shadow-xl
-  bg-gray-100
   pb-10
   height[1500px]
   2xl:width[80%]
@@ -109,6 +107,11 @@ const SupportCards = [
     title: "Step 2: Describe What you've tried",
     content:
       "Show what you’ve tried and tell us what you found (on this site or elsewhere) and why it didn’t meet your needs. You can get better answers when you provide research.",
+  },
+  {
+    title: "Step 3: review your question",
+    content:
+      "Review your question for spelling mistakes and make sure there is a clear question. Avoid asking several questions at once. It can make searching for answers more difficult ",
   },
   { title: "Extra", content: "Read how to write a good question here." },
 ];

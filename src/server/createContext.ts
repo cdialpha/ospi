@@ -1,41 +1,19 @@
-import { verify } from "crypto";
-import { NextApiRequest, NextApiResponse } from "next";
+import * as trpcNext from "@trpc/server/adapters/next";
+import * as trpc from "@trpc/server";
 import { verifyJwt } from "../utils/jwt";
 import { prisma } from "../utils/prsima";
+import { unstable_getServerSession as getServerSession } from "next-auth";
+import { authOptions as nextAuthOptions } from "../pages/api/auth/[...nextauth]";
 
-interface CtxUser {
-  id: string;
-  email: string;
-  name: string;
-  iat: string;
-  exp: number;
-}
+export const createContext = async (
+  opts?: trpcNext.CreateNextContextOptions
+) => {
+  const req = opts?.req;
+  const res = opts?.res;
+  const session =
+    req && res && (await getServerSession(req, res, nextAuthOptions));
 
-function getUserFromRequest(req: NextApiRequest) {
-  const token = req.cookies.token;
-  console.log("token: ", token);
-  if (token) {
-    try {
-      const verified = verifyJwt<CtxUser>(token);
-      console.log("verified? : ", token);
-      return verified;
-    } catch (e) {
-      return null;
-    }
-  }
-  return null;
-}
+  return { req, res, session, prisma };
+};
 
-export function createContext({
-  req,
-  res,
-}: {
-  req: NextApiRequest;
-  res: NextApiResponse;
-}) {
-  const user = getUserFromRequest(req);
-
-  return { req, res, prisma, user };
-}
-
-export type Context = ReturnType<typeof createContext>;
+export type Context = trpc.inferAsyncReturnType<typeof createContext>;

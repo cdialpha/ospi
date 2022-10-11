@@ -8,8 +8,9 @@ const SupportCardContainer = styled.div`
     
   border-radius[10px]
     border-2
-    shadow-xl
+    shadow-md
     mb-5
+    
   `}
 `;
 const SupportCardTitle = styled.div`
@@ -22,8 +23,11 @@ const SupportCardTitle = styled.div`
 `;
 const SupportCardBody = styled.div`
   ${tw`
-  border-2
+    border-2
     shadow-xl
+    pl-5
+    pr-5   
+    height[inherit] 
   `}
 `;
 
@@ -33,6 +37,7 @@ mr-5
 align-self[center]
 border-2
 border-radius[50%]
+
 `}
 `;
 
@@ -66,9 +71,7 @@ const SupportCard = ({ title, content }: SupportCardProps) => {
       </div>
       <SupportCardBody
         ref={contentRef}
-        className={
-          active ? `` : `border-t-2 border-gray-100 max-h-0 overflow-hidden `
-        }
+        className={active ? `pt-5 pb-5 ` : ` max-h-0 overflow-hidden`}
       >
         {content}
       </SupportCardBody>

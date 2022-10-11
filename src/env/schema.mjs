@@ -14,6 +14,8 @@ export const serverSchema = z.object({
   FACEBOOK_CLIENT_SECRET: z.string(),
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
+  AWS_S3_UPLOAD_ACCESS_KEY: z.string(),
+  AWS_S3_UPLOAD_ACCESS_SECRET_KEY: z.string(),
 });
 
 /**

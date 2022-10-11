@@ -9,16 +9,20 @@ const Container = styled.div`
   ${tw`
   flex 
   justify-around
+
   border-b-2
   shadow-xl
   bg-gray-200
- `}
+  height[75px]
+
+  `}
 `;
 
 const NavItems = styled.ul`
   ${tw`
   flex 
   justify-around
+  relative
 `}
 `;
 
@@ -39,10 +43,8 @@ const NavItem = styled.li`
 
 const ProfileImage = styled(Image)`
   ${tw`
+  height[50px]
   border-radius[50%]
-  mt-2
-  mb-2
-
 `}
 `;
 
@@ -92,11 +94,13 @@ const Navbar = () => {
         )}
         {session.status === "authenticated" && (
           <>
-            <ProfileImage
-              src={session.data.user?.image!}
-              width={50}
-              height={50}
-            />
+            <div className="relative mt-auto mb-auto">
+              <ProfileImage
+                src={session.data.user?.image!}
+                width={50}
+                height={50}
+              />
+            </div>
             <NavItem>{session.data.user?.name}</NavItem>
             <NavItem>
               <Link

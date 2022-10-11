@@ -5,8 +5,12 @@ import { useForm } from "react-hook-form";
 import { createPostInput } from "../schema/post.schema";
 import { useRouter } from "next/router";
 import { trpc } from "../utils/trpc";
-import { Button } from "./forum";
 import SupportCard from "../components/SupportCard";
+import { AiOutlineCloseCircle } from "react-icons/ai";
+import ImageUpload from "../components/ImageUpload";
+
+// if I need an embeded text editor later, I could use:
+// https://www.tiny.cloud/docs/tinymce/6/react-pm-host/
 
 const Container = styled.div`
   ${tw`
@@ -81,11 +85,24 @@ const NewQuestionTitle = styled.div`
     mt-5
 `}
 `;
+const LabelContainer = styled.div`
+  ${tw`
+  flex
+  `}
+`;
+const Subtitle = styled.p`
+  ${tw`
+  ml-2
+  text-gray-600
+  align-self[flex-end]
+  `}
+`;
 const TitleInput = styled.input`
   ${tw`
     width[95%]
     lg:width[90%]  
     mt-2    
+    border-2
 `}
 `;
 const BodyInput = styled.textarea`
@@ -94,6 +111,54 @@ const BodyInput = styled.textarea`
   lg:width[90%]   
     height[150px]
     mt-2
+    border-2
+`}
+`;
+const TagsInputContainer = styled.div`
+  ${tw`
+border-2
+mr-10
+min-height[100px]
+`}
+`;
+const TagsInput = styled.input`
+  ${tw`
+  width[95%]
+  lg:width[90%]   
+  mt-2
+`}
+`;
+const Tag = styled.p`
+  ${tw`
+  flex
+  text-black
+  bg-gray-100
+  pl-2
+  border-radius[15px]
+  margin[5px 5px 5px 5px]
+`}
+`;
+const CloseButton = styled(AiOutlineCloseCircle)`
+  ${tw`
+  mt-auto
+  mb-auto
+  ml-1
+  mr-1
+  text-red-800
+  text-lg
+
+`}
+`;
+const Button = styled.button`
+  ${tw`
+bg-blue-400
+border-radius[15px]
+height[50px]
+width[200px]
+text-white
+hover:bg-blue-500
+mb-5
+mt-2
 `}
 `;
 
@@ -116,9 +181,16 @@ const SupportCards = [
   { title: "Extra", content: "Read how to write a good question here." },
 ];
 
+// unfortunately pressing enter will auto-submit form.
+//Which is not good if I want enter to be used to submit a tag.
+// https://github.com/react-hook-form/react-hook-form/discussions/2549
+
 const asknew = () => {
-  const { handleSubmit, register } = useForm<createPostInput>();
+  const { handleSubmit, register, setValue } = useForm<createPostInput>();
   const router = useRouter();
+  const [tags, setTags] = useState(["example1", "example2"]);
+  const [images, setImages] = useState<FileList[]>([]);
+  console.log("images sent up to asknew component: ", images);
 
   const { mutate, error } = trpc.useMutation(["posts.create-post"], {
     onSuccess: ({ id }) => {
@@ -126,16 +198,58 @@ const asknew = () => {
     },
   });
 
-  function onSubmit(values: createPostInput) {
-    mutate(values);
-  }
+  const onSubmit = (values: createPostInput) => {
+    var s3UploadUrl = trpc.useQuery(["s3.s3"]);
+    console.log(s3UploadUrl);
+
+    setValue("tags", tags);
+
+    // images.forEach((image) => {
+    // get s3 upload url for each image
+
+    //post each image to s3 bucket
+    // const config = {
+    //   method: "POST",
+    //   headers: { "Content-type": image.type },
+    //   body: image,
+    // };
+    // const res = fetch(s3UploadUrl, config);
+    // const data = res.json();
+    // trim signed url, to be just url
+    // trimmedUrls.push(s3UploadUrl.split("?")[0]);
+    // });
+    // add array of image urls to values to POST
+    // setValue("images", trimmedUrls);
+    // console.log(values);
+    // mutate(values);
+  };
+
+  const removeTag = (index) => {
+    setTags(tags.filter((el, i) => i != index));
+  };
+
+  // Prevent Enter from submitting form
+  const checkKeyDown = (e) => {
+    if (e.code === "Enter") e.preventDefault();
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key != "Enter") return;
+    const value = e.target.value;
+    if (!value.trim()) return;
+    setTags([...tags, value]);
+    e.target.value = "";
+  };
 
   return (
     <Container>
       <Header> Ask a question</Header>
       <CardContainer>
         <NewQuestionContainer>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            onKeyDown={(e) => checkKeyDown(e)}
+          >
             {error && error.message}
 
             <NewQuestionTitle>Title</NewQuestionTitle>
@@ -146,9 +260,37 @@ const asknew = () => {
             />
             <br />
             <NewQuestionTitle>Body</NewQuestionTitle>
-            <BodyInput placeholder="Your post title" {...register("body")} />
+            <BodyInput
+              placeholder=" Question body & supporting details"
+              {...register("body")}
+            />
             <br />
-            <Button className="mb-5 mt-2">Create post</Button>
+            <LabelContainer className="mb-2">
+              <NewQuestionTitle>Add Images</NewQuestionTitle>
+              <Subtitle>(select up to 5) </Subtitle>
+            </LabelContainer>
+            <ImageUpload setImages={setImages} images={images} />
+            <br />
+            <NewQuestionTitle>Tags</NewQuestionTitle>
+            <TagsInputContainer>
+              {tags?.map((tag, index) => {
+                return (
+                  <div className="inline-block">
+                    <Tag key={index}>
+                      {tag}
+                      <CloseButton onClick={() => removeTag(index)} />
+                    </Tag>
+                  </div>
+                );
+              })}
+              <TagsInput
+                disabled={tags.length > 4 ? true : false}
+                placeholder=" Include up to 5 tags..."
+                onKeyDown={handleKeyDown}
+              />
+            </TagsInputContainer>
+            <br />
+            <Button type="submit">Create post</Button>
           </form>
         </NewQuestionContainer>
         <SupportCardsContainer>

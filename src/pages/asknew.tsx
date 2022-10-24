@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
-import { useForm } from "react-hook-form";
-import { createPostInput } from "../schema/post.schema";
+import { useForm, useFormContext } from "react-hook-form";
+import { createPostInput, getS3UrlInput } from "../schema/post.schema";
 import { useRouter } from "next/router";
 import { trpc } from "../utils/trpc";
 import SupportCard from "../components/SupportCard";
@@ -11,6 +11,7 @@ import ImageUpload from "../components/ImageUpload";
 
 // if I need an embeded text editor later, I could use:
 // https://www.tiny.cloud/docs/tinymce/6/react-pm-host/
+//  https://ckeditor.com/ https://www.tinymce.com/
 
 const Container = styled.div`
   ${tw`
@@ -186,60 +187,68 @@ const SupportCards = [
 // https://github.com/react-hook-form/react-hook-form/discussions/2549
 
 const asknew = () => {
-  const { handleSubmit, register, setValue } = useForm<createPostInput>();
+  const { handleSubmit, register, setValue, getValues } =
+    useForm<createPostInput>();
   const router = useRouter();
   const [tags, setTags] = useState(["example1", "example2"]);
-  const [images, setImages] = useState<FileList[]>([]);
+  const [images, setImages] = useState<File[] | []>([]);
   console.log("images sent up to asknew component: ", images);
 
   const { mutate, error } = trpc.useMutation(["posts.create-post"], {
-    onSuccess: ({ id }) => {
-      router.push(`/posts/${id}`);
+    onSuccess: ({ postId }) => {
+      router.push(`/posts/${postId}`);
     },
   });
 
-  const onSubmit = (values: createPostInput) => {
-    var s3UploadUrl = trpc.useQuery(["s3.s3"]);
-    console.log(s3UploadUrl);
+  const numberOfImages = images?.length; // as number ;
 
-    setValue("tags", tags);
+  type useQueryProps = [string, getS3UrlInput];
 
-    // images.forEach((image) => {
-    // get s3 upload url for each image
+  const { data } = trpc.useQuery(["s3.s3", { numberOfImages }], {});
 
+  const onSubmit = async (values: createPostInput) => {
+    let trimmedUrls: string[] = [];
     //post each image to s3 bucket
-    // const config = {
-    //   method: "POST",
-    //   headers: { "Content-type": image.type },
-    //   body: image,
-    // };
-    // const res = fetch(s3UploadUrl, config);
-    // const data = res.json();
-    // trim signed url, to be just url
-    // trimmedUrls.push(s3UploadUrl.split("?")[0]);
-    // });
-    // add array of image urls to values to POST
-    // setValue("images", trimmedUrls);
-    // console.log(values);
-    // mutate(values);
+    data.forEach(async (url: string, index: number) => {
+      const image = images[index];
+      const config = {
+        method: "PUT",
+        headers: { "Content-type": image?.type },
+        body: image,
+      };
+      const res = fetch(url, config);
+      res.then(() => console.log("image uploaded"));
+      trimmedUrls.push(url.split("?")[0]);
+    });
+    setValue("images", trimmedUrls);
+    values = getValues();
+    console.log(values);
+    mutate(values); // I need to mutate values before I post them to the S3 bucket. I don't want extra photos if the post failed.
   };
 
-  const removeTag = (index) => {
-    setTags(tags.filter((el, i) => i != index));
-  };
-
-  // Prevent Enter from submitting form
-  const checkKeyDown = (e) => {
+  // Prevent Enter from submitting form, default nature of RHF.
+  const checkKeyDown = (e: KeyboardEvent) => {
     if (e.code === "Enter") e.preventDefault();
   };
 
-  const handleKeyDown = (e) => {
+  // checks to see if enter is pressed on tag input, adds tag, clears input
+  // for some reason console logs before setvalue
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+    const target = e.target as HTMLInputElement;
+    const value = target.value;
     if (e.key != "Enter") return;
-    const value = e.target.value;
     if (!value.trim()) return;
     setTags([...tags, value]);
-    e.target.value = "";
+    setValue("tags", tags);
+    target.value = "";
   };
+
+  // removes tag where (x) is clicked
+  const removeTag = (index: number) => {
+    setTags(tags.filter((el, i) => i != index));
+  };
+
+  //register tags
 
   return (
     <Container>
@@ -270,6 +279,7 @@ const asknew = () => {
               <Subtitle>(select up to 5) </Subtitle>
             </LabelContainer>
             <ImageUpload setImages={setImages} images={images} />
+            <input {...register("images")} className="invisible" />
             <br />
             <NewQuestionTitle>Tags</NewQuestionTitle>
             <TagsInputContainer>
@@ -284,9 +294,13 @@ const asknew = () => {
                 );
               })}
               <TagsInput
+                {...register("tags", {
+                  setValueAs: (v) => tags,
+                })}
                 disabled={tags.length > 4 ? true : false}
                 placeholder=" Include up to 5 tags..."
                 onKeyDown={handleKeyDown}
+                // onChange={(e) => {}}
               />
             </TagsInputContainer>
             <br />
@@ -295,7 +309,7 @@ const asknew = () => {
         </NewQuestionContainer>
         <SupportCardsContainer>
           {SupportCards.map((x) => (
-            <SupportCard title={x.title} content={x.content} />
+            <SupportCard key={x.title} title={x.title} content={x.content} />
           ))}
         </SupportCardsContainer>
       </CardContainer>

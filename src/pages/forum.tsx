@@ -11,7 +11,8 @@ import SideNav from "../components/SideNav";
 const View = styled.div`
   ${tw`
   flex
-  height[1500px]
+  min-height[80vh]
+  mb-10
 `}
 `;
 const ForumContainer = styled.div`
@@ -85,7 +86,8 @@ const Forum = () => {
         </FilterContainer>
         {data.map((post: postProps) => (
           <PostCard
-            key={post.id}
+            key={post.postId}
+            postId={post.postId}
             title={post.title}
             body={post.body}
             author={post.author}
@@ -93,6 +95,7 @@ const Forum = () => {
             createdAt={post.createdAt}
             numberOfComments={post.numberOfComments}
             upVotes={post.upVotes}
+            images={post.images}
           />
         ))}
       </ForumContainer>

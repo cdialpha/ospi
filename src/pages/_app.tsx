@@ -1,4 +1,4 @@
-// src/pages/_app.tsx
+import { useState } from "react";
 import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
 import { loggerLink } from "@trpc/client/links/loggerLink";
 import { withTRPC } from "@trpc/next";
@@ -10,11 +10,31 @@ import "tailwindcss/tailwind.css";
 import Head from "next/head";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import ModalManager from "../components/Modals/ModalManager";
 
 const MyApp: AppType = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
+  const [modalOpen, setModal] = useState("");
+  const [modalPayload, setModalPayload] = useState({});
+
+  // add type MouseEventHandler<HTMLButtonElement> ?
+  const openModal = (event: React.SyntheticEvent<EventTarget>) => {
+    const {
+      target: {
+        dataset: { modal, payload },
+      },
+    } = event;
+    console.log("modal", modal, "payload", payload);
+    if (modal) setModal(modal);
+    if (payload) setModalPayload(payload);
+  };
+
+  const closeModal = () => {
+    setModal("");
+  };
+
   return (
     <>
       <Head>
@@ -22,9 +42,16 @@ const MyApp: AppType = ({
       </Head>
 
       <SessionProvider session={session}>
-        <Navbar />
-        <Component {...pageProps} />
-        <Footer />
+        <div onClick={openModal}>
+          <Navbar />
+          <ModalManager
+            closeFn={closeModal}
+            modal={modalOpen}
+            payload={modalPayload}
+          />
+          <Component {...pageProps} />
+          <Footer />
+        </div>
       </SessionProvider>
     </>
   );

@@ -26,8 +26,8 @@ const SupportCardBody = styled.div`
     border-2
     shadow-xl
     pl-5
-    pr-5   
-    height[inherit] 
+    pr-5 
+    height[100px]
   `}
 `;
 
@@ -62,7 +62,7 @@ const SupportCard = ({ title, content }: SupportCardProps) => {
   };
 
   return (
-    <SupportCardContainer onClick={toggleAccordion}>
+    <SupportCardContainer key={title} onClick={toggleAccordion}>
       <div className="flex justify-between">
         <SupportCardTitle>{title}</SupportCardTitle>
         <Expand>

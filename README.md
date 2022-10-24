@@ -1,3 +1,8 @@
+to run docker container for postgres:
+
+1. docker exec -it postgres_ospi bash
+2. psql -U postgres
+
 Also checkout these awesome tutorials on `create-t3-app`.
 
 - [Build a Blog With the T3 Stack - tRPC, TypeScript, Next.js, Prisma & Zod](https://www.youtube.com/watch?v=syEWlxVFUrY)

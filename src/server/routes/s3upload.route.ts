@@ -4,6 +4,7 @@ import { createRouter } from "../createRouter";
 import aws from "aws-sdk";
 import { env } from "../../env/server.mjs";
 import crypto from "crypto";
+import { getS3Url } from "../../schema/post.schema";
 
 const region = "us-east-1";
 const bucketName = "ospi-question-images";
@@ -27,14 +28,20 @@ const params = {
 };
 
 export const s3Router = createRouter().query("s3", {
-  async resolve({ ctx }) {
+  input: getS3Url,
+  async resolve({ input, ctx }) {
     if (!ctx.session?.user) {
       new trpc.TRPCError({
         code: "FORBIDDEN",
         message: "Cannot create a post while logged out",
       });
     }
-    const uploadUrl = s3.getSignedUrlPromise("putObject", params);
-    return uploadUrl;
+    let arrayOfSignedUrls = [];
+    for (let i = 0; i < input.numberOfImages; i++) {
+      const signedS3Url = await s3.getSignedUrlPromise("putObject", params);
+      arrayOfSignedUrls.push(signedS3Url);
+    }
+    // console.log("from router: ", arrayOfSignedUrls);
+    return arrayOfSignedUrls;
   },
 });

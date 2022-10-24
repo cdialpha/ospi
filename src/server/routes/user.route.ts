@@ -1,4 +1,5 @@
-// import { createRouter } from "../createRouter";
+import { createRouter } from "../createRouter";
+import * as trpc from "@trpc/server";
 // import {
 //   createUserOutputSchema,
 //   createUserSchema,
@@ -7,7 +8,7 @@
 //   verifyOtpSchema,
 // } from "../../schema/user.schema";
 // import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
-// import * as trpc from "@trpc/server";
+
 // import { baseUrl } from "../../constants";
 // import { encode, decode } from "../../utils/base64";
 // import { sendLoginEmail } from "../../utils/mailer";
@@ -15,8 +16,30 @@
 // import { signJwt } from "../../utils/jwt";
 // import { serialize } from "cookie";
 
-export {};
-// export const userRouter = createRouter()
+import { getSingleUserSchema } from "../../schema/user.schema";
+
+export const userRouter = createRouter()
+  .query("me", {
+    resolve({ ctx }) {
+      return ctx.user;
+    },
+  })
+  .query("single-user-details", {
+    input: getSingleUserSchema,
+    resolve({ input, ctx }) {
+      return ctx.prisma.user.findUnique({
+        where: {
+          id: input.userId,
+        },
+        include: {
+          posts: {},
+          comments: {},
+          bookmarks: {},
+        },
+      });
+    },
+  });
+
 //   .mutation("register-user", {
 //     input: createUserSchema,
 //     async resolve({ ctx, input }) {
@@ -119,8 +142,4 @@ export {};
 //       };
 //     },
 //   })
-//   .query("me", {
-//     resolve({ ctx }) {
-//       return ctx.user;
-//     },
-//   });
+//

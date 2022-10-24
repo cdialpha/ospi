@@ -9,7 +9,6 @@ const Container = styled.div`
   ${tw`
   flex 
   justify-around
-
   border-b-2
   shadow-xl
   bg-gray-200
@@ -50,6 +49,7 @@ const ProfileImage = styled(Image)`
 
 const Navbar = () => {
   const session = useSession();
+  console.log(session);
 
   return (
     <Container>
@@ -101,16 +101,21 @@ const Navbar = () => {
                 height={50}
               />
             </div>
-            <NavItem>{session.data.user?.name}</NavItem>
             <NavItem>
-              <Link
-                href="/api/auth/signout"
-                onClick={(e) => {
-                  e.preventDefault();
-                  signOut();
-                }}
-              >
-                <a>Logout</a>
+              <a href={`/profile/${session.data.user?.id}`}>
+                {session.data.user?.name}
+              </a>
+            </NavItem>
+            <NavItem>
+              <Link href="/api/auth/signout">
+                <a
+                  onClick={(e) => {
+                    e.preventDefault();
+                    signOut();
+                  }}
+                >
+                  Logout
+                </a>
               </Link>
             </NavItem>
           </>

@@ -1,7 +1,48 @@
 
 
-Edit Feature
-https://stackoverflow.com/help/privileges/edit
 
 Reward System 
 https://stackoverflow.com/help/badges
+
+What is reputation?
+https://stackoverflow.com/help/whats-reputation
+
+What does it mean to accept an answer ?
+https://meta.stackexchange.com/questions/5234/how-does-accepting-an-answer-work
+
+Why should I edit posts ? What is an edit? 
+https://stackoverflow.com/help/editing#:~:text=Any%20user%20can%20propose%20edits,the%20post%20or%20discard%20it.
+
+Edit Feature
+https://stackoverflow.com/help/privileges/edit
+
+
+Tagging functionality
+Great video. Any idea how do I extend the functionality of this comment section with ability of tagging users in comment with '@' just like instagram allows dynamically?
+It's more advanced stuff. You need a handler when @ symbol is typed
+in input and return a list of users from the backend to autocomplete.
+Also every time when the commend is created you need to past mentioned
+user on backend and send him a notification.
+
+Thoughts: 
+    
+    - would I want to do text Verification? 
+        - pros
+            - higher quality data, fewer bots / scammers
+            - account recovery (not a problem if use federated id)
+        - cons
+            - phone numbers constantly change
+            - pay for solution
+    
+    - Should I use next-auth ? 
+        - pros
+            - most people use facebook
+            - can add un/pw later?  
+        - cons
+
+    - City / Country Autocomplete solution would be nice ? 
+        - GeoDB Cities 1,000 / day free tier
+        - GeoDB Should probably be sufficient.
+        - Support French?   
+        - alternatively List of countries dropdown?
+        pros

@@ -56,13 +56,14 @@ flex-col
 `;
 
 const Home: NextPage = () => {
-  function getWindowDimensions() {
-    const { innerWidth: width, innerHeight: height } = window;
-    return {
-      width,
-      height,
-    };
-  }
+  //where was I going with this? Size image automatically?
+  // function getWindowDimensions() {
+  //   const { innerWidth: width, innerHeight: height } = window;
+  //   return {
+  //     width,
+  //     height,
+  //   };
+  // }
 
   return (
     <>

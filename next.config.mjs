@@ -21,6 +21,16 @@ export default defineNextConfig({
     defaultLocale: "en",
   },
   images: {
-    domains: ["lh3.googleusercontent.com"],
+    domains: [
+      "lh3.googleusercontent.com",
+      "ospi-question-images.s3.amazonaws.com",
+    ],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "ospi-question-images.s3.amazonaws.com/**",
+        pathname: "**",
+      },
+    ],
   },
 });

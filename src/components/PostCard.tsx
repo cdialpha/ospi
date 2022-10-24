@@ -91,7 +91,7 @@ const AuthorName = styled.p`
 `;
 
 export type postProps = {
-  id?: string;
+  postId: string;
   title: string;
   body: string;
   upVotes: number;
@@ -101,6 +101,7 @@ export type postProps = {
   updatedAt?: Date;
   authorId?: String;
   author: Author;
+  images: String[];
 };
 export type Author = {
   name: String;
@@ -108,6 +109,7 @@ export type Author = {
 };
 
 const PostCard: React.FC<postProps> = ({
+  postId,
   title,
   body,
   views,
@@ -115,12 +117,16 @@ const PostCard: React.FC<postProps> = ({
   createdAt,
   numberOfComments,
   upVotes,
+  images,
 }) => {
   const questionAge = getPostAge(createdAt);
 
   return (
     <Card>
-      <Title> {title} </Title>
+      <Title>
+        {" "}
+        <a href={`/posts/${postId}`}>{title} </a>{" "}
+      </Title>
       <DetailsContainer>
         <Detail>
           <AiFillLike className="mt-auto mb-auto mr-2" />

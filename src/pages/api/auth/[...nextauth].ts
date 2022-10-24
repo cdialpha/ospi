@@ -17,6 +17,14 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  callbacks: {
+    session({ session, user }) {
+      if (session.user) {
+        session.user.id = user.id;
+      }
+      return session;
+    },
+  },
 };
 
 export default NextAuth(authOptions);
@@ -27,14 +35,6 @@ export default NextAuth(authOptions);
 //   })
 
 // THIS CAME OUT OTB WITH NEXT AUTH.
-// callbacks: {
-//   session({ session, user }) {
-//     if (session.user) {
-//       session.user.id = user.id;
-//     }
-//     return session;
-//   },
-// },
 
 // RECOMMENDED BY NEXT AUTH GOOGLE DOC
 // callbacks: {

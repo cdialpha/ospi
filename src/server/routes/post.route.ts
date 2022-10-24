@@ -22,7 +22,7 @@ export const postRouter = createRouter()
           author: {
             connect: {
               id: ctx.session?.user?.id,
-              email: ctx.session?.user?.email!,
+              //email: ctx.session?.user?.email!,  <-- I deleted this because prisma create post yelled at me.
             },
           },
         },
@@ -47,9 +47,18 @@ export const postRouter = createRouter()
   .query("single-post", {
     input: getSinglePostSchema,
     resolve({ input, ctx }) {
+      console.log("hi");
       return ctx.prisma.post.findUnique({
         where: {
-          id: input.postId,
+          postId: input.postId,
+        },
+        include: {
+          author: {
+            select: {
+              name: true,
+              image: true,
+            },
+          },
         },
       });
     },

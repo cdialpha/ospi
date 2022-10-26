@@ -1,5 +1,8 @@
 
-
+Features: 
+ - add tool tips for up/down vote
+ - image optimization for comments. Need to figure out how to perserve aspect ratio. 
+ - in general need to figure out how to handle images. S3 is a short term solution. 
 
 Reward System 
 https://stackoverflow.com/help/badges
@@ -16,13 +19,20 @@ https://stackoverflow.com/help/editing#:~:text=Any%20user%20can%20propose%20edit
 Edit Feature
 https://stackoverflow.com/help/privileges/edit
 
+Minimum Quality Feature
+https://meta.stackexchange.com/questions/92074/what-can-i-do-when-getting-this-question-body-does-not-meet-our-quality-standar
 
 Tagging functionality
-Great video. Any idea how do I extend the functionality of this comment section with ability of tagging users in comment with '@' just like instagram allows dynamically?
-It's more advanced stuff. You need a handler when @ symbol is typed
+Any idea how do I extend the functionality of this comment
+ section with ability of tagging users in comment with '@' just like 
+ instagram allows dynamically?
+
+
+@User Tagging/Reply Functionality.
+"You need a handler when @ symbol is typed
 in input and return a list of users from the backend to autocomplete.
 Also every time when the commend is created you need to past mentioned
-user on backend and send him a notification.
+user on backend and send him a notification." - monster academy 
 
 Thoughts: 
     

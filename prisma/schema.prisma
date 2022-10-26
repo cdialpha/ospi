@@ -37,23 +37,22 @@ model Session {
 }
 
 model User {
-    id                String              @id @default(cuid())
-    name              String?
-    email             String?             @unique
-    dateJoined        DateTime            @default(now())
-    image             String?
-    bio               String?
-    emailVerified     Boolean?            @default(false) // can't figure out if this is NextAuth otb, or did I add? 
-    accounts          Account[]
-    sessions          Session[]
-    posts             Post[]              @relation("PostAuthor")
-    comments          Comment[]
-    bookmarks         Post[]              @relation("Bookmark")
-    twitter           String?
-    insta             String?
-    facebook          String?
-    website           String?
-    RepleisToComments RepleisToComments[]
+    id            String    @id @default(cuid())
+    name          String?
+    email         String?   @unique
+    dateJoined    DateTime  @default(now())
+    image         String?
+    bio           String?
+    emailVerified Boolean?  @default(false) // can't figure out if this is NextAuth otb, or did I add? 
+    accounts      Account[]
+    sessions      Session[]
+    posts         Post[]    @relation("PostAuthor")
+    comments      Comment[]
+    bookmarks     Post[]    @relation("Bookmark")
+    twitter       String?
+    insta         String?
+    facebook      String?
+    website       String?
 }
 
 model VerificationToken {
@@ -95,34 +94,34 @@ model Post {
 // }
 
 model Comment {
-    commentId         String              @id @default(cuid())
-    text              String              @default("")
-    images            String[]
-    Post              Post                @relation(fields: [postId], references: [postId])
-    postId            String
-    createdAt         DateTime            @default(now())
-    updatedAt         DateTime            @updatedAt
+    commentId      String   @id @default(cuid())
+    text           String   @default("")
+    images         String[]
+    Post           Post     @relation(fields: [postId], references: [postId])
+    postId         String
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt
     // editHistory    CommentEdits[]
-    parentId          String? // <---- SHOULD I DO THIS? 
-    selectedAnswer    Boolean             @default(false)
-    upVotes           Int                 @default(0)
-    User              User                @relation(fields: [commentedById], references: [id])
-    commentedById     String
+    parentId       String?
+    selectedAnswer Boolean  @default(false)
+    upVotes        Int      @default(0)
+    User           User     @relation(fields: [commentedById], references: [id])
+    commentedById  String
     // PostEdit       PostEdit[]
-    RepleisToComments RepleisToComments[]
 }
 
-model RepleisToComments {
-    replyId     String   @id @default(ccuid())
-    text        String   @default("")
-    images      String[]
-    Comment     Comment  @relation(fields: [commentId], references: [commentId])
-    commentId   String
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
-    User        User     @relation(fields: [repliedById], references: [id])
-    repliedById String
-}
+// (B) OR THIS ? 
+// model RepleisToComments {
+//     replyId     String   @id @default(cuid())
+//     text        String   @default("")
+//     images      String[]
+//     Comment     Comment  @relation(fields: [commentId], references: [commentId])
+//     commentId   String
+//     createdAt   DateTime @default(now())
+//     updatedAt   DateTime @updatedAt
+//     User        User     @relation(fields: [repliedById], references: [id])
+//     repliedById String
+// }
 
 // model CommentEdits {
 //     Comment    Comment  @relation(fields: [commentId], references: [commentId])

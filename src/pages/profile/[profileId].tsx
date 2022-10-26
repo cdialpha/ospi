@@ -4,8 +4,8 @@ import { trpc } from "../../utils/trpc";
 import Error from "next/error";
 import tw from "twin.macro";
 import styled from "styled-components";
-
 import Bio from "../../components/Bio";
+
 const View = styled.div`
   ${tw`
   flex

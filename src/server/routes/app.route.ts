@@ -1,5 +1,4 @@
 import { createRouter } from "../createRouter";
-// import { userRouter } from "./user.router";
 import { postRouter } from "./post.route";
 import { s3Router } from "./s3upload.route";
 import { userRouter } from "./user.route";

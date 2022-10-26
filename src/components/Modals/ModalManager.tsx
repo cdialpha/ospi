@@ -11,7 +11,7 @@ export type ModalManagerProps = {
 };
 
 const ModalManager = ({ closeFn, modal, payload }: ModalManagerProps) => {
-  console.log("modal", modal);
+  // console.log("modal", modal);
 
   return (
     <>

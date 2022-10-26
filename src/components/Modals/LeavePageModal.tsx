@@ -90,7 +90,7 @@ const SubmitButton = styled.button`
 `;
 
 const LeaveModal = ({ closeFn, open = false, payload }: ModalProps) => {
-  if (payload.length) payload = JSON.parse(payload);
+  //   if (payload.length) payload = JSON.parse(payload);
 
   return (
     <ModalShell open={open}>

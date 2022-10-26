@@ -22,7 +22,6 @@ export const postRouter = createRouter()
           author: {
             connect: {
               id: ctx.session?.user?.id,
-              //email: ctx.session?.user?.email!,  <-- I deleted this because prisma create post yelled at me.
             },
           },
         },

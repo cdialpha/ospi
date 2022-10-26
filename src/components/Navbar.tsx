@@ -49,7 +49,7 @@ const ProfileImage = styled(Image)`
 
 const Navbar = () => {
   const session = useSession();
-  console.log(session);
+  // console.log(session);
 
   return (
     <Container>

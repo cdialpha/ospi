@@ -1,5 +1,7 @@
 import moment from "moment";
 
+// TODO: create day(s) responsiveness
+
 export const getPostAge = (postDateTime: Date) => {
   const today = new Date();
   const todayTimeStamp = today.getTime();

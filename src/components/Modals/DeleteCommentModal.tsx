@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
 import ModalShell from "./ModalShell";
-
+import { trpc } from "../../utils/trpc";
 export type ModalProps = {
   closeFn: () => null;
   open: boolean;
@@ -93,20 +93,32 @@ const DeleteModal = ({
   closeFn = () => null,
   open = false,
   payload,
+  refetch,
 }: ModalProps) => {
-  if (payload.length) payload = JSON.parse(payload);
+  const { mutate, error } = trpc.useMutation(["comments.delete-comment"], {
+    onSuccess: () => {
+      // when comment is deleted, how do I refetch?
+      // since modal isn't a child of my component....
+    },
+  });
 
-  const onDelete = async (payload) => {
+  // used try catch here because I kept getting error.
+  //"[object Object]" is not valid JSON
+  // has to do if click even has no data-payload property?
+  // cleaner way to do this ?
+  if (payload) {
+    console.log(typeof payload, payload);
+    try {
+      payload = JSON.parse(payload);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const onDelete = async (payload: string) => {
     closeFn();
+    mutate(payload);
   };
-
-  // originally in modal shell component
-  //  const handleCloseClick = (e) => {
-  //   e.preventDefault();
-  //   onClose();
-  // };
-
-  console.log("is open?", open);
 
   return (
     <ModalShell open={open}>
@@ -116,8 +128,7 @@ const DeleteModal = ({
             <ModalTitle>Delete?</ModalTitle>
           </Header>
           <h1 className="text-center">
-            {" "}
-            Are you sure you want to delete this comment?{" "}
+            Are you sure you want to delete this comment?
           </h1>
           <Actions>
             <CancelButton onClick={closeFn}>Cancel</CancelButton>

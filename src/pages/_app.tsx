@@ -26,7 +26,7 @@ const MyApp: AppType = ({
         dataset: { modal, payload },
       },
     } = event;
-    console.log("modal", modal, "payload", payload);
+    // console.log("modal", modal, "payload", payload);
     if (modal) setModal(modal);
     if (payload) setModalPayload(payload);
   };

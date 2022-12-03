@@ -7,12 +7,12 @@ import { createReplyType } from "../schema/comment.schema";
 import { TbArrowBack } from "react-icons/tb";
 import { useRouter } from "next/router";
 
-type ReplyProps = {
+type ReplyFormProps = {
   commentId: string;
   postId: string;
 };
 
-const Reply: React.FC<ReplyProps> = ({ commentId, postId }) => {
+const ReplyForm: React.FC<ReplyFormProps> = ({ commentId, postId }) => {
   const session = useSession();
   const userId = session.data?.user?.id;
   const router = useRouter();
@@ -62,4 +62,4 @@ const Reply: React.FC<ReplyProps> = ({ commentId, postId }) => {
   );
 };
 
-export default Reply;
+export default ReplyForm;

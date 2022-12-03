@@ -17,7 +17,7 @@ import axios from "axios";
 
 const Container = styled.div`
   ${tw`
-  width[30vw]
+  [width:30vw]
   relative
   border-2
   border-gray-200
@@ -25,7 +25,7 @@ const Container = styled.div`
   ml-10
   mr-10
   mb-5
-  border-radius[15px]
+  [border-radius:15px]
   shadow-xl
   pl-10
   pr-10
@@ -43,7 +43,7 @@ const SocialMedia = styled.div`
 
 const ProfilePic = styled(Image)`
   ${tw`
-  border-radius[50%]
+  [border-radius:50%]
   `}
 `;
 

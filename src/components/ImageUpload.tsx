@@ -11,9 +11,9 @@ const Delete = styled(AiOutlineCloseCircle)`
     text-red-800
     bg-white
     z-10
-    top[5%]
-    right[5%]
-    border-radius[50%]
+    [top:5%]
+    [right:5%]
+    [border-radius:50%]
 `}
 `;
 

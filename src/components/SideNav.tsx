@@ -7,10 +7,9 @@ const Container = styled.div`
 flex
 flex-col
 border-2
-width[300px]
+[width:300px]
 `}
 `;
-
 const NavItems = styled.ul`
   ${tw`
 flex
@@ -18,7 +17,6 @@ flex-col
 mt-10
 `}
 `;
-
 const NavItem = styled.li`
   ${tw`
     text-xl

@@ -5,17 +5,15 @@ import { FaAngleDown } from "react-icons/fa";
 
 const SupportCardContainer = styled.div`
   ${tw`
-    
-  border-radius[10px]
+    rounded-lg
     border-2
     shadow-md
-    mb-5
-    
+    mb-5 
   `}
 `;
 const SupportCardTitle = styled.div`
   ${tw`
-  font-weight[600]
+  font-bold
   pt-2
   pb-2
   pl-2
@@ -27,17 +25,15 @@ const SupportCardBody = styled.div`
     shadow-xl
     pl-5
     pr-5 
-    height[100px]
+    h-24
   `}
 `;
-
 const Expand = styled.div`
   ${tw`
 mr-5
-align-self[center]
+[align-self:center]
 border-2
-border-radius[50%]
-
+[border-radius:50%]
 `}
 `;
 

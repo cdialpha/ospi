@@ -12,11 +12,9 @@ const Container = styled.div`
   border-b-2
   shadow-xl
   bg-gray-200
-  height[75px]
-
+  [height:75px]
   `}
 `;
-
 const NavItems = styled.ul`
   ${tw`
   flex 
@@ -24,7 +22,6 @@ const NavItems = styled.ul`
   relative
 `}
 `;
-
 const NavItem = styled.li`
   ${tw`
   text-black
@@ -32,18 +29,16 @@ const NavItem = styled.li`
   mr-4
   mt-auto
   mb-auto
-  list-style[none]
-  font-weight[900]
+  [list-style:none]
+  [font-weight:900]
   hover:text-gray-600
   hover:cursor-pointer
-
 `}
 `;
-
 const ProfileImage = styled(Image)`
   ${tw`
-  height[50px]
-  border-radius[50%]
+  [height:50px]
+  [border-radius:50%]
 `}
 `;
 

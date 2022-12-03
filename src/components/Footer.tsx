@@ -5,7 +5,7 @@ import { SiFacebook, SiInstagram, SiTwitter } from "react-icons/si";
 
 const FooterContainer = styled.div`
   ${tw`
-    bottom[0]
+    [bottom: 0]
     w-full
     h-96
     flex
@@ -54,7 +54,7 @@ const InnerContainer = styled.div`
 `;
 const LeftInnerContainer = styled.div`
   ${tw`   flex
-    flex[5]
+    [flex: 5]
     w-full
     h-full
     justify-between
@@ -66,7 +66,7 @@ const RightInnerContainer = styled.div`
     flex
     flex-col
     lg:flex-row
-    flex[1]
+    [flex: 1]
     w-full
     h-full
     mb-5
@@ -112,7 +112,7 @@ const BottomSection = styled.div`
 
 const Copyright = styled.span`
   ${tw` 
-font-size[x-small]
+    [font-size: x-small]
     w-full
     lg:w-auto
     text-center
@@ -120,7 +120,7 @@ font-size[x-small]
 `;
 
 const SmallText = styled.span`
-  ${tw` font-size[small]
+  ${tw` [font-size: small]
 `}
 `;
 

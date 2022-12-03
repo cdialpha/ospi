@@ -8,24 +8,23 @@ import { ModalProps } from "./DeleteCommentModal";
 const ModalMask = styled.div`
   ${tw`
   fixed
-  top[0px]
-  bottom[0px]
-  left[0px]
-  right[0px]
+  [top:0px]
+  [bottom:0px]
+  [left:0px]
+  [right:0px]
   z-10
   bg-opacity-50
   bg-black
   `}
 `;
-
 const ModalBody = styled.div`
   ${tw`
     flex
     flex-col
-    position[fixed]
-    width[300px]
-    height[200px]
-    border-radius[10px]
+    [position:fixed]
+    [width:300px]
+    [height:200px]
+    [border-radius:10px]
     border-4
 
   `}
@@ -35,23 +34,20 @@ const ModalBody = styled.div`
   background-color: #fff;
   z-index: 1000;
 `;
-
 const Header = styled.div`
   ${tw`
     flex
     justify-between
-    align-items[center]
-    padding[20px]
+    [align-items:center]
+    [padding:20px]
 `}
 `;
-
 const ModalTitle = styled.h1`
   ${tw`
-font-weight[900]
+[font-weight:900]
 text-3xl
 `}
 `;
-
 const Actions = styled.div`
   ${tw`
   flex
@@ -60,29 +56,28 @@ const Actions = styled.div`
 `;
 const CancelButton = styled.button`
   ${tw`
-    width[200px]
+    [width:200px]
     border-2
     border-gray-700
     bg-gray-50
     text-gray-700
     mt-5
-    border-radius[10px]
+    [border-radius:10px]
     hover:bg-gray-100
     hover:border-gray-900
     hover:text-gray-900
     `}
 `;
-
 const SubmitButton = styled.button`
   ${tw`
-    width[200px]
+    [width:200px]
     border-2
     border-red-700
     bg-red-50
     text-red-700
     mt-5
     ml-5
-    border-radius[10px]
+    [border-radius:10px]
     hover:bg-red-100
     hover:border-red-900
     hover:text-red-900

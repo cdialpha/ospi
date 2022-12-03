@@ -19,8 +19,8 @@ const Container = styled.div`
   flex-col
   border-b-2
   pb-10
-  height[1500px]
-  2xl:width[80%]
+  [height:1500px]
+  2xl:w-4/5
   2xl:ml-auto
   2xl:mr-auto
 `}
@@ -28,11 +28,11 @@ const Container = styled.div`
 const Header = styled.h1`
   ${tw`
 text-4xl
-font-weight[900]
+font-extrabold
 mt-5
 ml-0
-align-self[center]
-md:align-self[flex-start]
+[align-self:center]
+md:[align-self:flex-start]
 md:mt-10
 md:ml-10
 `}
@@ -44,18 +44,18 @@ const CardContainer = styled.div`
     grid-cols-1
     lg:grid-rows-1
     lg:grid-cols-2
-    column-gap[0px]
-    row-gap[50px]
-    lg:column-gap[0%]
-    lg:row-gap[50px]
+    [column-gap:0px]
+    [row-gap:50px]
+    lg:[column-gap:0%]
+    lg:[row-gap:50px]
 `}
 `;
 const SupportCardsContainer = styled.div`
   ${tw`
     flex
     flex-col
-    md:width[90%]
-    lg:width[90%]
+    md:[width:90%]
+    lg:[width:90%]
     mt-5
     ml-auto
     mr-auto
@@ -65,8 +65,8 @@ const SupportCardsContainer = styled.div`
 `;
 const NewQuestionContainer = styled.div`
   ${tw`
-    border-radius[10px]
-    width[90%]
+    rounded-xl
+    [width:90%]
     pl-5
     mt-5
     ml-auto
@@ -76,13 +76,13 @@ const NewQuestionContainer = styled.div`
     lg:mt-10
     lg:ml-10
     lg:pl-10
-    lg:width[80%]
+    lg:w-4/5
 `}
 `;
 const NewQuestionTitle = styled.div`
   ${tw`
     text-xl
-    font-weight[600]
+    font-bold
     mt-5
 `}
 `;
@@ -95,22 +95,22 @@ const Subtitle = styled.p`
   ${tw`
   ml-2
   text-gray-600
-  align-self[flex-end]
+  [align-self:flex-end]
   `}
 `;
 const TitleInput = styled.input`
   ${tw`
-    width[95%]
-    lg:width[90%]  
+    [width:95%]
+    lg:[width:90%]  
     mt-2    
     border-2
 `}
 `;
 const BodyInput = styled.textarea`
   ${tw`
-  width[95%]
-  lg:width[90%]   
-    height[150px]
+  [width:95%]
+  lg:[width:90%]   
+    [height:150px]
     mt-2
     border-2
 `}
@@ -119,13 +119,13 @@ const TagsInputContainer = styled.div`
   ${tw`
 border-2
 mr-10
-min-height[100px]
+[min-height:100px]
 `}
 `;
 const TagsInput = styled.input`
   ${tw`
-  width[95%]
-  lg:width[90%]   
+  [width:95%]
+  lg:[width:90%]   
   mt-2
 `}
 `;
@@ -135,8 +135,8 @@ const Tag = styled.p`
   text-black
   bg-gray-100
   pl-2
-  border-radius[15px]
-  margin[5px 5px 5px 5px]
+  rounded-2xl
+  [margin: 5px 5px 5px 5px]
 `}
 `;
 const CloseButton = styled(AiOutlineCloseCircle)`
@@ -153,9 +153,9 @@ const CloseButton = styled(AiOutlineCloseCircle)`
 const Button = styled.button`
   ${tw`
 bg-blue-400
-border-radius[15px]
-height[50px]
-width[200px]
+rounded-2xl
+h-12
+w-52
 text-white
 hover:bg-blue-500
 mb-5
@@ -247,8 +247,6 @@ const asknew = () => {
   const removeTag = (index: number) => {
     setTags(tags.filter((el, i) => i != index));
   };
-
-  //register tags
 
   return (
     <Container>

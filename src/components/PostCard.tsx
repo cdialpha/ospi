@@ -11,6 +11,7 @@ import {
   AiFillEye,
   AiFillLike,
 } from "react-icons/ai";
+
 const Card = styled.div`
   ${tw`
   flex 
@@ -22,7 +23,6 @@ const Card = styled.div`
   pt-5
 `}
 `;
-
 const DetailsContainer = styled.div`
   ${tw`
   flex 
@@ -51,19 +51,16 @@ const Body = styled.div`
   mt-5
 `}
 `;
-
 const TagsContainer = styled.div`
   ${tw`
 flex
 `}
 `;
-
 const Tag = styled.div`
   ${tw`
 bg-gray-100
 `}
 `;
-
 const AskedBy = styled.h1`
   ${tw`
   flex 
@@ -73,11 +70,10 @@ const AskedBy = styled.h1`
   mb-5
 `}
 `;
-
 const AuthorImage = styled(Image)`
   ${tw`
-  height[50px]
-  border-radius[50%]
+  [height:50px]
+  [border-radius:50%]
 `}
 `;
 

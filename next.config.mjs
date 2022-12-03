@@ -25,12 +25,14 @@ export default defineNextConfig({
       "lh3.googleusercontent.com",
       "ospi-question-images.s3.amazonaws.com",
     ],
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "ospi-question-images.s3.amazonaws.com/**",
-        pathname: "**",
-      },
-    ],
   },
 });
+
+// Where did this come from ?
+// remotePatterns: [
+//   {
+//     protocol: "https",
+//     hostname: "ospi-question-images.s3.amazonaws.com/**",
+//     pathname: "**",
+//   },
+// ]

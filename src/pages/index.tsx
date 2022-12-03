@@ -13,21 +13,14 @@ const Container = styled.div`
   border-b-2
   shadow-xl
   bg-gray-100
-  height[1000px]
-`}
-`;
-
-const HeroContainer = styled.div`
-  ${tw`
-
+  [height:1000px]
 `}
 `;
 
 const HeroImage = styled.div`
   ${tw`
-  relative
   w-screen
-  height[500px]
+  h-1/2
   bg-blue-300
   z-0  
 `}
@@ -35,17 +28,15 @@ const HeroImage = styled.div`
 
 const HeroText = styled.div`
   ${tw`
-  absolute
-  top[350px]
-  left[10%]
-  height[150px]
-  width[80vw]
+  relative
+  [bottom: 20%]
+  [left:10%]
+  [width:80vw]
   z-10
-  font-weight[900]
-  font-size[50px]
+  font-extrabold
+  text-5xl
   text-center
 `}
-  background-color:rgba(20,20,20,0.1)
 `;
 
 const RulesContainer = styled.div`
@@ -73,12 +64,12 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container>
-        <HeroContainer>
+        <div>
           <HeroImage>
-            <Image src={savannah} height={1000} width={3000} />
+            <Image src={savannah} height={2000} width={3000} />
           </HeroImage>
           <HeroText> The comprehensive guide for small scale farmers </HeroText>
-        </HeroContainer>
+        </div>
 
         <RulesContainer>
           <h1>Community Rules</h1>

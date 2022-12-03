@@ -12,10 +12,10 @@ export type ModalProps = {
 const ModalMask = styled.div`
   ${tw`
   fixed
-  top[0px]
-  bottom[0px]
-  left[0px]
-  right[0px]
+  [top: 0px]
+  [bottom:0px]
+  [left:0px]
+  [right:0px]
   z-10
   bg-opacity-50
   bg-black
@@ -25,10 +25,10 @@ const ModalBody = styled.div`
   ${tw`
     flex
     flex-col
-    position[fixed]
-    width[500px]
-    height[200px]
-    border-radius[10px]
+    [position: fixed]
+    [width: 500px]
+    [height: 200px]
+    [border-radius: 10px]
     border-4
 
   `}
@@ -42,13 +42,13 @@ const Header = styled.div`
   ${tw`
     flex
     justify-between
-    align-items[center]
-    padding[20px]
+    [align-items: center]
+    [padding: 20px]
 `}
 `;
 const ModalTitle = styled.h1`
   ${tw`
-font-weight[900]
+[font-weight: 900]
 text-3xl
 ml-auto mr-auto
 `}
@@ -61,13 +61,13 @@ const Actions = styled.div`
 `;
 const CancelButton = styled.button`
   ${tw`
-    width[200px]
+    [width:200px]
     border-2
     border-gray-700
     bg-gray-50
     text-gray-700
     mt-5
-    border-radius[10px]
+    [border-radius:10px]
     hover:bg-gray-100
     hover:border-gray-900
     hover:text-gray-900
@@ -75,14 +75,14 @@ const CancelButton = styled.button`
 `;
 const SubmitButton = styled.button`
   ${tw`
-    width[200px]
+    [width:200px]
     border-2
     border-red-700
     bg-red-50
     text-red-700
     mt-5
     ml-5
-    border-radius[10px]
+    [border-radius:10px]
     hover:bg-red-100
     hover:border-red-900
     hover:text-red-900
@@ -93,7 +93,6 @@ const DeleteModal = ({
   closeFn = () => null,
   open = false,
   payload,
-  refetch,
 }: ModalProps) => {
   const { mutate, error } = trpc.useMutation(["comments.delete-comment"], {
     onSuccess: () => {
@@ -106,19 +105,20 @@ const DeleteModal = ({
   //"[object Object]" is not valid JSON
   // has to do if click even has no data-payload property?
   // cleaner way to do this ?
-  if (payload) {
-    console.log(typeof payload, payload);
-    try {
-      payload = JSON.parse(payload);
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
-  const onDelete = async (payload: string) => {
-    closeFn();
-    mutate(payload);
-  };
+  // if (payload) {
+  //   console.log("payload", typeof payload, payload);
+  //   try {
+  //     payload = JSON.parse(payload);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
+
+  // const onDelete = async (payload: string) => {
+  //   closeFn();
+  //   mutate(payload);
+  // };
 
   return (
     <ModalShell open={open}>
@@ -132,9 +132,7 @@ const DeleteModal = ({
           </h1>
           <Actions>
             <CancelButton onClick={closeFn}>Cancel</CancelButton>
-            <SubmitButton onClick={() => onDelete(payload)}>
-              Delete
-            </SubmitButton>
+            <SubmitButton>Delete</SubmitButton>
           </Actions>
         </ModalBody>
       </ModalMask>
@@ -143,3 +141,6 @@ const DeleteModal = ({
 };
 
 export default DeleteModal;
+
+// add to on submit button
+// onClick={() => onDelete(payload)}

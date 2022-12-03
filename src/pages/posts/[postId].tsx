@@ -15,7 +15,7 @@ import {
 import { MdSort } from "react-icons/md";
 import Image from "next/image";
 import { getSinglePost } from "../../schema/post.schema";
-import Comment, { CommentProps } from "../../components/Comment";
+import Comment from "../../components/Comment";
 import CreateComment from "../../components/CreateComment";
 
 const SubField = styled.h1`
@@ -37,7 +37,6 @@ const SinglePostPage = () => {
   const router = useRouter();
   const postId = router.query.postId as string;
   const getSinglePost = trpc.useQuery(["posts.single-post", { postId }]);
-
   const getComments = trpc.useQuery([
     "comments.all-one-post-comments",
     { postId },
@@ -68,7 +67,7 @@ const SinglePostPage = () => {
 
   const postAge = getPostAge(getSinglePost.data.createdAt);
   const modifiedAge = getPostAge(getSinglePost.data.updatedAt);
-  const viewCount = "1.1k";
+  const viewCount = getSinglePost.data.views;
   const upVotes = "822";
   const bookmarkCount = "109";
 

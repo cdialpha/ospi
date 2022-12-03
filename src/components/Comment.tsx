@@ -36,9 +36,9 @@ export type Comment = {
 
 // could consolodate with existing User type from postcard.tsx
 export type User = {
-  name: String;
-  image: String;
-  userId: String;
+  name: string;
+  image: string;
+  userId: string;
 };
 
 const Comment: React.FC<Comment> = ({

@@ -11,7 +11,7 @@ import SideNav from "../components/SideNav";
 const View = styled.div`
   ${tw`
   flex
-  min-height[80vh]
+  [min-height:80vh]
   mb-10
 `}
 `;
@@ -19,7 +19,7 @@ const ForumContainer = styled.div`
   ${tw`
   flex 
   flex-col
-  width[100%]
+  w-full
   border-b-2
   ml-10
   mr-10
@@ -48,11 +48,11 @@ mt-10
 `;
 const Filter = styled.div`
   ${tw`
-height[50px]
+h-12
 text-gray-600
 border-2
 border-gray-200
-padding[10px 10px 10px 10px]
+[padding:10px 10px 10px 10px]
 hover:bg-gray-100
 ml-2
 mr-2
